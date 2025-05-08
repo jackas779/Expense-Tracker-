@@ -1,0 +1,30 @@
+{
+  "name": "expense-tracker-",
+  "version": "1.0.0",
+  "description": "Build a simple expense tracker to manage your finances.",
+  "main": "index.js",
+  "type": "module",
+  "bin": {
+    "expense-tracker" : "index.js"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jackas779/Expense-Tracker-.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/jackas779/Expense-Tracker-/issues"
+  },
+  "homepage": "https://github.com/jackas779/Expense-Tracker-#readme",
+  "devDependencies": {
+    "standard": "^17.1.2"
+  },
+  "eslintConfig": {
+    "extends": "standard"
+  }
+}
