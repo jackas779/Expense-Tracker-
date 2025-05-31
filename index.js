@@ -46,7 +46,7 @@ if (!result.status) {
 
 const expense = new ExpennseController('modal')
 
-expense[result.command](1)
+expense[result.command](process.argv)
 
 console.log(result)
 
