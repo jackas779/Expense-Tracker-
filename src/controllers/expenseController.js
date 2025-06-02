@@ -1,6 +1,7 @@
-export class ExpennseController {
-  constructor (expenseModal) {
-    this.expenseModal = expenseModal
+export class ExpenseController {
+  #model
+  constructor (expenseModel) {
+    this.#model = expenseModel
   }
 
   add (...arg) {
@@ -57,7 +58,7 @@ export class ExpennseController {
       return
     }
 
-    console.log('Ya aqui eliges tu mismo que hacer')
+    return this.#model.add(description, amount)
   }
 
   update () {
