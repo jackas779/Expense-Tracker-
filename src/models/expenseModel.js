@@ -8,11 +8,11 @@ export class ExpenseModel {
     this.dataExpense = []
 
     if (!fs.existsSync(pathArchive)) {
-      this.setData([], 'al crear')
+      this.#setData([], 'al crear')
     }
   }
 
-  getData(){
+  #getData(){
     try {
       const data = fs.readFileSync(this.pathArchive, 'utf-8')
       const parseData = JSON.parse(data)
@@ -23,7 +23,7 @@ export class ExpenseModel {
     }
   }
 
-  setData(data,message){
+  #setData(data,message){
     try {
       fs.writeFileSync(this.pathArchive, JSON.stringify(data), 'utf-8')
     } catch (error) {
@@ -69,7 +69,7 @@ export class ExpenseModel {
       return 'el monto no es un valor valido debe ser mayor a 0'
     }
 
-    this.getData()
+    this.#getData()
     const data = this.dataExpense
 
     ////metodo para asegurarme que no existe algo 
@@ -92,12 +92,16 @@ export class ExpenseModel {
     }
     const newData = [...data,newExpense]
 
-    const updateData = this.setData(newData,'al actualizar')
+    const updateData = this.#setData(newData,'al actualizar')
 
     if(updateData){
       return `Gasto añadido satisfactoriamente (ID: ${newId})`
     }else{
       return 'No se pudo crear el gasto contacte a su administrador'
     }
+  }
+
+  list (){
+
   }
 }
