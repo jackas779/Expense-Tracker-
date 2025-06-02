@@ -51,6 +51,14 @@ export class ExpenseModel {
     return `${year}/${month}/${day}`
   }
 
+  verifiData(method,field){
+    if(method ===1){
+      return this.dataExpense.find(expense => expense.descripcion === field)
+    }else{
+      console.log("metodo no escogido");
+    }
+  }
+
   add(descripcion, amount){
 
     if(descripcion.length < 5 ){
@@ -63,6 +71,13 @@ export class ExpenseModel {
 
     this.getData()
     const data = this.dataExpense
+
+    ////metodo para asegurarme que no existe algo 
+
+    if(this.verifiData(1,descripcion)){
+      return `Ya existe un gasto creado con esta descripcion : (${descripcion})`
+    }
+
     const lastIdCreate = data.length
     const newId = lastIdCreate + 1
     const date = this.getDate()
@@ -71,6 +86,7 @@ export class ExpenseModel {
       id: newId,
       descripcion : descripcion,    
       amount : amount,
+      categoria: {},
       dateCreate : date,
       dateUpdate : ''
     }
@@ -83,6 +99,5 @@ export class ExpenseModel {
     }else{
       return 'No se pudo crear el gasto contacte a su administrador'
     }
-    
   }
 }
