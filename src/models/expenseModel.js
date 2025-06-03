@@ -1,11 +1,11 @@
 import fs from 'fs'
 
 export class ExpenseModel {
+  #dataExpense = []
 
   constructor(pathArchive, expenseFile){
     this.pathArchive = pathArchive
     this.expenseFile = expenseFile
-    this.dataExpense = []
 
     if (!fs.existsSync(pathArchive)) {
       this.#setData([], 'al crear')
@@ -16,7 +16,7 @@ export class ExpenseModel {
     try {
       const data = fs.readFileSync(this.pathArchive, 'utf-8')
       const parseData = JSON.parse(data)
-      this.dataExpense = [...parseData]
+      this.#dataExpense = [...parseData]
     } catch (error) {
       console.error('error al leer el achivo de datos', error)
       process.exit()
@@ -53,7 +53,7 @@ export class ExpenseModel {
 
   verifiData(method,field){
     if(method ===1){
-      return this.dataExpense.find(expense => expense.descripcion === field)
+      return this.#dataExpense.find(expense => expense.descripcion === field)
     }else{
       console.log("metodo no escogido");
     }
@@ -70,7 +70,7 @@ export class ExpenseModel {
     }
 
     this.#getData()
-    const data = this.dataExpense
+    const data = this.#dataExpense
 
     ////metodo para asegurarme que no existe algo 
 
@@ -102,6 +102,15 @@ export class ExpenseModel {
   }
 
   list (){
+    this.#getData()
+    const data = this.#dataExpense
 
+    console.log(data);
+
+    if(data.length === 0){
+      return 'No hay datos que mostrar'
+    }
+
+    console.table(data)
   }
 }

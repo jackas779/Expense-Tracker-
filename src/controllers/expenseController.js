@@ -62,7 +62,7 @@ export class ExpenseController {
   }
 
   update () {
-
+    
   }
 
   delete () {
@@ -78,6 +78,6 @@ export class ExpenseController {
   }
 
   list () {
-
+    this.#model.list()
   }
 }
