@@ -3,7 +3,7 @@ import fs from 'fs'
 export class ExpenseModel {
   #dataExpense = []
 
-  constructor(pathArchive, expenseFile){
+  constructor (pathArchive, expenseFile) {
     this.pathArchive = pathArchive
     this.expenseFile = expenseFile
 
@@ -12,7 +12,7 @@ export class ExpenseModel {
     }
   }
 
-  #getData(){
+  #getData () {
     try {
       const data = fs.readFileSync(this.pathArchive, 'utf-8')
       const parseData = JSON.parse(data)
@@ -23,7 +23,7 @@ export class ExpenseModel {
     }
   }
 
-  #setData(data,message){
+  #setData (data, message) {
     try {
       fs.writeFileSync(this.pathArchive, JSON.stringify(data), 'utf-8')
     } catch (error) {
@@ -34,47 +34,46 @@ export class ExpenseModel {
     return true
   }
 
-  getDate(){
+  getDate () {
     const date = new Date()
     const year = date.getFullYear()
     let month = date.getMonth()
     let day = date.getDate()
 
-    if(month < 10 ){
+    if (month < 10) {
       month = '0' + month
     }
 
-    if(day < 10 ){
+    if (day < 10) {
       day = '0' + day
     }
 
     return `${year}/${month}/${day}`
   }
 
-  verifiData(method,field){
-    if(method ===1){
+  verifiData (method, field) {
+    if (method === 1) {
       return this.#dataExpense.find(expense => expense.descripcion === field)
-    }else{
-      console.log("metodo no escogido");
+    } else {
+      console.log('metodo no escogido')
     }
   }
 
-  add(descripcion, amount){
-
-    if(descripcion.length < 5 ){
+  add (descripcion, amount) {
+    if (descripcion.length < 5) {
       return 'la descripcion es demasiada corta'
     }
 
-    if(amount < 1){
+    if (amount < 1) {
       return 'el monto no es un valor valido debe ser mayor a 0'
     }
 
     this.#getData()
     const data = this.#dataExpense
 
-    ////metodo para asegurarme que no existe algo 
+    /// /metodo para asegurarme que no existe algo
 
-    if(this.verifiData(1,descripcion)){
+    if (this.verifiData(1, descripcion)) {
       return `Ya existe un gasto creado con esta descripcion : (${descripcion})`
     }
 
@@ -84,30 +83,30 @@ export class ExpenseModel {
 
     const newExpense = {
       id: newId,
-      descripcion : descripcion,    
-      amount : amount,
+      descripcion,
+      amount,
       categoria: {},
-      dateCreate : date,
-      dateUpdate : ''
+      dateCreate: date,
+      dateUpdate: ''
     }
-    const newData = [...data,newExpense]
+    const newData = [...data, newExpense]
 
-    const updateData = this.#setData(newData,'al actualizar')
+    const updateData = this.#setData(newData, 'al actualizar')
 
-    if(updateData){
+    if (updateData) {
       return `Gasto añadido satisfactoriamente (ID: ${newId})`
-    }else{
+    } else {
       return 'No se pudo crear el gasto contacte a su administrador'
     }
   }
 
-  list (){
+  list () {
     this.#getData()
     const data = this.#dataExpense
 
-    console.log(data);
+    console.log(data)
 
-    if(data.length === 0){
+    if (data.length === 0) {
       return 'No hay datos que mostrar'
     }
 

@@ -1,119 +1,81 @@
-export function table (data) {
-  const line = '─'
+export function table (data, headers) {
+  const lineHorizontal = '─'
+  const lineVertical = '│'
   const columnWidths = {}
-  const levels = {}
+  const totalKey = headers.length
+
+  const topRightcorner = '┐'
+  const topLeftcorner = '┌'
+  const BottomLeftcorner = '└'
+  const BottomRightcorner = '┘'
+  const intertetionTop = '┬'
+  const intertetionInT = '┼'
+  const intertetionButtom = '┴'
+  const intertetionLeft = '├'
+  const intertetionRight = '┤'
+
+  headers.forEach(header => {
+    columnWidths[header] = header.length
+  })
 
   const indices = Object.keys(data)
 
   indices.forEach(index => {
-    const result = recovery(data[index], 0)
-    levels[index] = result
+    headers.forEach(header => {
+      if (columnWidths[header] < String(data[index][header]).length) {
+        columnWidths[header] = String(data[index][header]).length
+      }
+    })
   })
-  console.log(levels[0].categoria)
 
-  // data.forEach(element => {
-  //   console.log(typeof element)
-  //   if (typeof element === 'object') {
-  //     console.log('this is object')
-  //   }
-  // })
+  // header
+  let lineHeadTop = ''
+  let lineHeadButtom = ''
+  let bodyHead = lineVertical
 
-  // console.log(indices)
-}
-
-// class recovery {
-//   constructor(){
-//     this.nodoHijo = null
-//     this.level = 0
-//   }
-// }
-
-function recovery (dataElement, level) {
-  if (typeof dataElement !== 'object') {
-    return { level }
-  }
-  const floor = { level }
-
-  // if (property) {
-  //   floor[property] = property
-  // }
-
-  for (const key in dataElement) {
-    if (
-      Object.prototype.hasOwnProperty.call(dataElement, key) &&
-      typeof dataElement[key] === 'object'
-    ) {
-      const depth = recovery(dataElement[key], level + 1)
-
-      floor[key] = depth
+  headers.forEach((header, index) => {
+    if (index === totalKey - 1) {
+      lineHeadTop += lineHorizontal.repeat(columnWidths[header] + 2)
+      lineHeadButtom += lineHorizontal.repeat(columnWidths[header] + 2)
+    } else {
+      lineHeadTop += lineHorizontal.repeat(columnWidths[header] + 2) + intertetionTop
+      lineHeadButtom += lineHorizontal.repeat(columnWidths[header] + 2) + intertetionInT
     }
+    const width = columnWidths[header] - header.length
+    if (width > 0) {
+      bodyHead += ' ' + header + ' '.repeat(width + 1) + lineVertical
+    } else {
+      bodyHead += ' ' + header + ' ' + lineVertical
+    }
+  })
+
+  console.log(topLeftcorner + lineHeadTop + topRightcorner)
+  console.log(bodyHead)
+  console.log(intertetionLeft + lineHeadButtom + intertetionRight)
+
+  // body
+
+  indices.forEach(index => {
+    let body = lineVertical
+    headers.forEach(header => {
+      const width = columnWidths[header] - String(data[index][header]).length
+      if (width > 0) {
+        body += ' ' + data[index][header] + ' '.repeat(width + 1) + lineVertical
+      } else {
+        body += ' ' + data[index][header] + ' ' + lineVertical
+      }
+    })
+    console.log(body)
+  })
+
+  // footer
+
+  let lineFooter = BottomLeftcorner
+  let contador = 0
+  for (const key in columnWidths) {
+    contador++
+    const isLast = contador === totalKey
+    lineFooter += lineHorizontal.repeat(columnWidths[key] + 2) + (isLast ? BottomRightcorner : intertetionButtom)
   }
-  return floor
+  console.log(lineFooter)
 }
-const objeto = [
-  {
-    id: 1,
-    descripcion: 'maslarga',
-    amount: 5,
-    categoria: {
-      moder: {
-        id: 1
-      },
-      date: ''
-    },
-    dateCreate: '2025/05/01',
-    dateUpdate: ''
-  },
-  {
-    id: 2,
-    descripcion: 'motros',
-    amount: 5,
-    categoria: {},
-    dateCreate: '2025/05/02',
-    dateNoUpdate: ''
-  }
-]
-
-table(objeto)
-// console.table(})
-
-// if (Array.isArray(dataElement)) {
-//   for (const item of dataElement) {
-//     const depth = recovery(item, level + 1)
-//     if (depth > floor) {
-//       floor = depth
-//     }
-//   }
-// } else { // Si es un objeto "plano"
-//   for (const key in dataElement) {
-//     console.log(typeof dataElement[key])
-//     if (Object.prototype.hasOwnProperty.call(dataElement, key) && typeof dataElement[key] === 'object') {
-//       const depth = recovery(dataElement[key], level + 1, dataElement[key])
-//       if (depth > floor) {
-//         floor = depth
-//       }
-//     }
-//   }
-// }
-
-// function recovery (dataElement, level, property = null) {
-//   if (typeof dataElement !== 'object' || dataElement === null) {
-//     return level
-//   }
-
-//   const floor = { level: level + 1, property }
-
-//   for (const key in dataElement) {
-//     if (
-//       Object.prototype.hasOwnProperty.call(dataElement, key) &&
-//       typeof dataElement[key] === 'object'
-//     ) {
-//       const depth = recovery(dataElement[key], level + 1, key)
-//       if (depth > floor.level) {
-//         floor.level = depth
-//       }
-//     }
-//   }
-
-//   return floor
-// }

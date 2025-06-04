@@ -62,7 +62,7 @@ export class ExpenseController {
   }
 
   update () {
-    
+
   }
 
   delete () {
