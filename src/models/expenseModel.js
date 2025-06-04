@@ -1,4 +1,5 @@
 import fs from 'fs'
+import table from '../../utils/table.js'
 
 export class ExpenseModel {
   #dataExpense = []
@@ -85,7 +86,7 @@ export class ExpenseModel {
       id: newId,
       descripcion,
       amount,
-      categoria: {},
+      categoria: [],
       dateCreate: date,
       dateUpdate: ''
     }
@@ -104,12 +105,12 @@ export class ExpenseModel {
     this.#getData()
     const data = this.#dataExpense
 
-    console.log(data)
-
     if (data.length === 0) {
       return 'No hay datos que mostrar'
     }
 
-    console.table(data)
+    const headers = Object.keys(data[0])
+
+    table(data, headers)
   }
 }

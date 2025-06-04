@@ -1,4 +1,4 @@
-export function table (data, headers) {
+export default function table (data, headers) {
   const lineHorizontal = '─'
   const lineVertical = '│'
   const columnWidths = {}

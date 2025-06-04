@@ -78,6 +78,6 @@ export class ExpenseController {
   }
 
   list () {
-    this.#model.list()
+    return this.#model.list()
   }
 }
