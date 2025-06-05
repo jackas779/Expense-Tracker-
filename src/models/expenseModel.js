@@ -164,7 +164,7 @@ export class ExpenseModel {
 
     const findExpense = data.filter(expense => expense[cleanProperty] === valueProperty)
 
-    if (!findExpense) {
+    if (findExpense.length < 1) {
       return 'no se encontro ningun gasto'
     }
 
@@ -176,10 +176,47 @@ export class ExpenseModel {
 
     const result = this.#setData(data, 'al actualizar')
 
-    if (result) {
-      return 'Gasto actualizado satisfactoriamente.'
+    if (!result) {
+      return 'No se pudo actualizar el gasto'
     }
 
-    return 'No se pudo actualizar el gasto'
+    return 'Gasto actualizado satisfactoriamente.'
+  }
+
+  delete (comand, id) {
+    const comandValid = ['id']
+
+    if (!comandValid.includes(comand.substring(2))) {
+      return `comando no identificado (${comand})`
+    }
+
+    try {
+      id = parseInt(id)
+    } catch (err) {
+      return 'no se pudo convertir valor a numero'
+    }
+
+    if (isNaN(id)) {
+      return 'El valor del id no es un formato valido'
+    }
+
+    this.#getData()
+
+    const data = this.#dataExpense
+    const findExpense = data.filter(expense => expense.id === id)
+
+    if (findExpense.length < 1) {
+      return 'No se encontro el gasto a eliminar'
+    }
+
+    const filterExpense = data.filter(expense => expense.id !== id)
+
+    const result = this.#setData(filterExpense, 'al eliminar el gasto de')
+
+    if (!result) {
+      return 'No se pudo eliminar el gasto'
+    }
+
+    return 'Gasto eliminado satisfactoriamente.'
   }
 }

@@ -87,8 +87,22 @@ export class ExpenseController {
     return this.#model.update(property, valueProperty, findProperty, newValue)
   }
 
-  delete () {
+  delete (...arg) {
+    const argument = arg[0][3] ?? null
+    const id = arg[0][4] ?? null
 
+    if (argument === null) {
+      return 'el argumento no pueede estar vacio'
+    }
+    if (!argument.startsWith('--')) {
+      return 'el argumento debe comenzar con --'
+    }
+
+    if (id === null) {
+      return 'El numero de identificacion no puede estar vacio '
+    }
+
+    return this.#model.delete(argument, id)
   }
 
   view () {
