@@ -105,8 +105,35 @@ export class ExpenseController {
     return this.#model.delete(argument, id)
   }
 
-  sumary () {
+  sumary (...arg) {
+    const comand = arg[0][3] ?? null
+    let value = arg[0][4] ?? null
 
+    if (comand !== null) {
+      if (!comand.startsWith('--')) {
+        return 'El argumento es invalido debe comenzar con (--)'
+      }
+
+      if (value === null) {
+        return 'El numero de mes no puede estar vacio'
+      }
+
+      try {
+        value = parseInt(value)
+      } catch (err) {
+        return 'no se pudo convertir valor a numero'
+      }
+
+      if (isNaN(value)) {
+        return 'El valor del mes no es un formato valido'
+      }
+
+      if (value < 1 || value > 12) {
+        return 'El valor del mes debe ser un valor de 1 al 12 '
+      }
+    }
+
+    return this.#model.sumary(comand, value)
   }
 
   list () {

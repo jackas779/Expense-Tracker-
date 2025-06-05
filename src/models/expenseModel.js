@@ -219,4 +219,36 @@ export class ExpenseModel {
 
     return 'Gasto eliminado satisfactoriamente.'
   }
+
+  sumary (comand, valueMonth) {
+    const comandValid = ['month']
+
+    this.#getData()
+
+    const data = this.#dataExpense
+    let total = 0
+
+    if (comand !== null) {
+      if (!comandValid.includes(comand.substring(2))) {
+        return 'comando invalido'
+      }
+
+      const findExpense = data.filter(expense => {
+        const date = expense.dateCreate.split('/')
+        const month = parseInt(date[1], 10) + 1
+        return !isNaN(month) && month === valueMonth
+      })
+      if (findExpense.length > 0) {
+        findExpense.forEach(expense => {
+          total += expense.amount
+        })
+      }
+    } else {
+      data.forEach(expense => {
+        total += expense.amount
+      })
+    }
+
+    return `# Total expenses: ${total}`
+  }
 }
