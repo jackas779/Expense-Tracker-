@@ -49,8 +49,7 @@ export class ExpenseController {
     try {
       amount = parseInt(amount)
     } catch (error) {
-      console.log('El valor de amount debe ser un numero valido')
-      return
+      return 'El valor de amount debe ser un numero valido'
     }
 
     if (Number.isNaN(amount)) {
@@ -61,8 +60,31 @@ export class ExpenseController {
     return this.#model.add(description, amount)
   }
 
-  update () {
+  update (...arg) {
+    const property = arg[0][3] ?? ''
+    const valueProperty = arg[0][4] ?? ''
+    const findProperty = arg[0][5] ?? ''
+    const newValue = arg[0][6] ?? ''
 
+    if (!property) {
+      return 'No puede estar vacia la propiedad a buscar'
+    }
+
+    if (!findProperty) {
+      return 'No puede estar vacia la propiedad a modificar'
+    }
+    if (!property.startsWith('--') || !findProperty.startsWith('--')) {
+      const invalidProperty = !property.startsWith('--') ? property : findProperty
+      return `El propiedad debe comenzar con -- propiedad invalida (${invalidProperty})`
+    }
+    if (!valueProperty) {
+      return 'El valor a buscar no puede esta vacio'
+    }
+
+    if (!newValue) {
+      return 'no puede estar vacio el nuevo valor a modificar'
+    }
+    return this.#model.update(property, valueProperty, findProperty, newValue)
   }
 
   delete () {

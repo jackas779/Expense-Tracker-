@@ -113,4 +113,73 @@ export class ExpenseModel {
 
     table(data, headers)
   }
+
+  update (property, valueProperty, findProperty, newValue) {
+    const propertyvalidFind = {
+      descripcion: 'String',
+      id: 'Number'
+    }
+    const propertyValid = {
+      ...propertyvalidFind,
+      amount: 'Number',
+      categoria: 'String'
+    }
+    const cleanProperty = property.substring(2)
+    const cleanFindProperty = findProperty.substring(2)
+
+    if (!propertyvalidFind[cleanProperty]) {
+      return `propiedad no valida (${property})`
+    }
+
+    if (cleanProperty === 'id') {
+      try {
+        valueProperty = parseInt(valueProperty)
+      } catch (error) {
+        return 'Hubo un error al convertir la cadena en un numero '
+      }
+    }
+
+    if (!propertyValid[cleanFindProperty]) {
+      return `propiedad no valida para su actualizacion(${findProperty})`
+    }
+
+    if (propertyValid[cleanFindProperty] === 'Number') {
+      try {
+        newValue = parseInt(newValue)
+      } catch (error) {
+        return 'Hubo un error al convertir la cadena en un numero '
+      }
+
+      if (newValue < 1) {
+        return 'El valor no puede ser menor a 1'
+      }
+    } else {
+      if (newValue.length < 5) {
+        return 'La cadena de texto no puede tener una longitud menor a 5 caracteres'
+      }
+    }
+
+    this.#getData()
+    const data = this.#dataExpense
+
+    const findExpense = data.filter(expense => expense[cleanProperty] === valueProperty)
+
+    if (!findExpense) {
+      return 'no se encontro ningun gasto'
+    }
+
+    if (!findExpense[0][cleanFindProperty]) {
+      return `propiedad no encontrada (${findProperty})`
+    }
+
+    findExpense[0][cleanFindProperty] = newValue
+
+    const result = this.#setData(data, 'al actualizar')
+
+    if (result) {
+      return 'Gasto actualizado satisfactoriamente.'
+    }
+
+    return 'No se pudo actualizar el gasto'
+  }
 }
