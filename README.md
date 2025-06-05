@@ -7,10 +7,36 @@ Proyecto realizo con los requisitos propuestos de la pagina de roadmap para mas 
 
 Una herramienta de línea de comandos para gestionar gastos personales con almacenamiento persistente en JSON.
 
-## 🚀 Instalación
+## 🚀 Instalación Global
+
+Sigue estos pasos para instalar Task Tracker CLI globalmente en tu sistema y poder ejecutar el comando `expense-tracker` desde cualquier terminal:
+
+1.  **Clonar el Repositorio:**
+    ```bash
+    git clone [https://github.com/jackas779/Task-Tracket.git](https://github.com/jackas779/Expense-Tracker-.git)
+    cd Expense-Tracker-
+    ```
+
+2.  **Instalar Globalmente:**
+    Desde el directorio raíz del proyecto clonado, ejecuta el siguiente comando para instalar la CLI globalmente usando npm:
+    ```bash
+    npm install -g .
+    ```
+    El punto (`.`) al final indica a npm que instale el paquete ubicado en el directorio actual de forma global.
+
+3.  **Verificar Instalación:**
+    Una vez completada la instalación, deberías poder ejecutar el comando `expense-tracker` desde cualquier ventana de terminal nueva. Prueba ejecutando el comando help:
+    ```bash
+    expense-tracker help
+    ```
+    Si ves el mensaje de ayuda, ¡la instalación fue exitosa!
+
+## Desinstalación Global
+
+Para eliminar Task Tracker CLI de tu instalación global de npm, usa el siguiente comando:
 
 ```bash
-  npm install -g expense-tracker-cli
+  npm uninstall -g task-tracker #[O el nombre exacto de tu paquete en package.json]
 ```
 
 ## 📋 Uso Basico
@@ -77,7 +103,7 @@ Muestra el total acumulado (opcionalmente filtrado por mes)
 ```
 ```bash 
   ┌────┬──────────────────────┬────────┬───────────────┐
-  │ ID │ Descripción          │ Monto  │ Fecha         │
+  │ ID │ Descripción          │ Amount │ Date          │
   ├────┼──────────────────────┼────────┼───────────────┤
   │ 1  │ Supermercado         │ 125.50 │ 2023/05/15    │
   │ 2  │ Gasolina             │  45.80 │ 2023/05/18    │
