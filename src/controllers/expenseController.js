@@ -105,10 +105,6 @@ export class ExpenseController {
     return this.#model.delete(argument, id)
   }
 
-  view () {
-
-  }
-
   sumary () {
 
   }
