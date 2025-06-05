@@ -139,4 +139,41 @@ export class ExpenseController {
   list () {
     return this.#model.list()
   }
+
+  help () {
+    console.log(`
+      📊 Expense Tracker CLI - Comandos disponibles:
+
+      ## Operaciones básicas
+      ▶ add --description "descripción" --amount [cantidad]
+        - Añade un nuevo gasto
+        - Ejemplo: add --description "Cena restaurante" --amount 50
+
+      ▶ list
+        - Muestra todos los gastos en formato de tabla
+
+      ## Operaciones avanzadas  
+      ▶ update --[propiedad] [valor] --[propiedad-a-modificar] [nuevo-valor]
+        - Actualiza un gasto existente
+        - Propiedades válidas: --id, --description
+        - Campos modificables: --description, --amount, --categoria
+        - Ejemplo: update --id 5 --amount 75 (actualiza el amount del gasto con ID 5)
+
+      ▶ delete --id [id]
+        - Elimina un gasto por su ID
+        - Ejemplo: delete --id 3
+
+      ▶ summary [--month [mes]]
+        - Muestra el total de gastos
+        - Opcional: filtrar por mes (1-12)
+        - Ejemplo: summary --month 5 (gastos de mayo)
+
+      ## Ayuda adicional
+      ▶ Todos los comandos deben comenzar con --
+      ▶ Las descripciones deben tener al menos 5 caracteres
+      ▶ Los montos deben ser números positivos
+
+      💡 Que te diviertas
+    `)
+  }
 }

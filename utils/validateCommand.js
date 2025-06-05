@@ -1,5 +1,5 @@
 export default function validateCommand (command) {
-  const commandValid = ['add', 'update', 'delete', 'view', 'sumary', 'list']
+  const commandValid = ['add', 'update', 'delete', 'view', 'sumary', 'list', 'help']
   command = command.toLowerCase()
 
   if (command === '' || command.length === 0) {
